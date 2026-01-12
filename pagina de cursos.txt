@@ -1,0 +1,44 @@
+// frontend/src/pages/Courses.js
+import React, { useState, useEffect } from 'react';
+import CourseCard from '../components/CourseCard';
+import './Courses.css';
+
+const Courses = () => {
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchCourses();
+    }, []);
+
+    const fetchCourses = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/courses');
+            const data = await response.json();
+            setCourses(data);
+        } catch (error) {
+            console.error('Erro ao carregar cursos:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="courses-page">
+            <div className="container">
+                <h1 className="page-title">Nossos Cursos</h1>
+                {loading ? (
+                    <div className="loading">Carregando cursos...</div>
+                ) : (
+                    <div className="courses-grid">
+                        {courses.map(course => (
+                            <CourseCard key={course.id} course={course} />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Courses;

@@ -1,0 +1,51 @@
+// backend/src/controllers/adminController.js
+const Course = require('../models/Course');
+const User = require('../models/User');
+const Payment = require('../models/Payment');
+
+exports.getDashboard = async (req, res) => {
+    try {
+        const [courses, users, payments] = await Promise.all([
+            Course.findAll(),
+            User.findAll(),
+            Payment.getRecentPayments()
+        ]);
+        
+        const stats = {
+            totalCourses: courses.length,
+            totalUsers: users.length,
+            totalRevenue: payments.reduce((sum, p) => sum + p.valor, 0),
+            recentPayments: payments
+        };
+        
+        res.json(stats);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.manageCourses = async (req, res) => {
+    try {
+        const { action, courseId, ...data } = req.body;
+        
+        switch(action) {
+            case 'create':
+                const newId = await Course.create(data);
+                res.json({ id: newId, message: 'Curso criado com sucesso' });
+                break;
+            case 'update':
+                await Course.update(courseId, data);
+                res.json({ message: 'Curso atualizado com sucesso' });
+                break;
+            case 'delete':
+                await Course.delete(courseId);
+                res.json({ message: 'Curso removido com sucesso' });
+                break;
+            default:
+                const courses = await Course.findAll();
+                res.json(courses);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

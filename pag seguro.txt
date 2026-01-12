@@ -1,0 +1,43 @@
+// backend/src/services/paymentService.js
+const axios = require('axios');
+
+class PaymentService {
+    constructor() {
+        this.pagseguroEmail = process.env.PAGSEGURO_EMAIL;
+        this.pagseguroToken = process.env.PAGSEGURO_TOKEN;
+    }
+
+    async createPaymentSession(paymentData) {
+        const { course, user, reference } = paymentData;
+        
+        const payload = {
+            email: this.pagseguroEmail,
+            token: this.pagseguroToken,
+            currency: 'BRL',
+            reference: reference,
+            itemId1: course.id,
+            itemDescription1: course.titulo,
+            itemAmount1: course.valor.toFixed(2),
+            itemQuantity1: 1,
+            senderName: user.nome,
+            senderEmail: user.email,
+            redirectURL: `${process.env.FRONTEND_URL}/pagamento/sucesso`,
+            notificationURL: `${process.env.BACKEND_URL}/api/payments/notification`
+        };
+
+        try {
+            const response = await axios.post(
+                'https://ws.pagseguro.uol.com.br/v2/checkout',
+                payload,
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            throw new Error('Erro ao criar sessão de pagamento');
+        }
+    }
+}

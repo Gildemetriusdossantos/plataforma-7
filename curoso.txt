@@ -1,0 +1,36 @@
+// frontend/src/components/CourseCard.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './CourseCard.css';
+
+const CourseCard = ({ course }) => {
+    return (
+        <div className="course-card">
+            <div className="course-image">
+                <img 
+                    src={course.imagem_url || '/default-course.jpg'} 
+                    alt={course.titulo}
+                />
+            </div>
+            <div className="course-content">
+                <h3 className="course-title">{course.titulo}</h3>
+                <p className="course-description">
+                    {course.descricao.substring(0, 150)}...
+                </p>
+                <div className="course-footer">
+                    <span className="course-price">
+                        R$ {parseFloat(course.valor).toFixed(2)}
+                    </span>
+                    <Link 
+                        to={`/pagamento/${course.id}`}
+                        className="btn btn-primary"
+                    >
+                        Comprar Agora
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default CourseCard;

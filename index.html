@@ -1,0 +1,689 @@
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemática Fácil - Plataforma de Cursos Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Gerais */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #10b981;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --text-color: #334155;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-color);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Seções */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        /* Cards de Cursos */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .course-image {
+            height: 200px;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .course-content {
+            padding: 24px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .course-description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .course-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+
+        /* Admin Preview */
+        .admin-preview {
+            background: #f8fafc;
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 40px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <span>Matemática Fácil</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                    <li><a href="#funcionalidades">Funcionalidades</a></li>
+                    <li><a href="#tecnologias">Tecnologias</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="#demo" class="btn btn-outline">Aulas Grátis</a>
+                    <a href="#cursos" class="btn btn-primary">Ver Cursos</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Aprenda Matemática de Forma Fácil e Divertida</h1>
+            <p>Plataforma completa de cursos online com painel administrativo, sistema de pagamentos e área do aluno</p>
+            <div style="margin-top: 30px;">
+                <a href="#cursos" class="btn btn-primary" style="margin-right: 10px;">
+                    <i class="fas fa-play-circle"></i> Começar Agora
+                </a>
+                <a href="#funcionalidades" class="btn btn-outline" style="background: rgba(255,255,255,0.1); color: white; border-color: white;">
+                    <i class="fas fa-info-circle"></i> Saiba Mais
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos -->
+    <section id="cursos">
+        <div class="container">
+            <h2 class="section-title">Nossos Cursos</h2>
+            <p class="section-subtitle">Escolha entre nossos cursos especializados e comece sua jornada hoje mesmo</p>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Matemática Básica</h3>
+                        <p class="course-description">Domine os fundamentos da matemática com aulas práticas e exercícios resolvidos.</p>
+                        <div class="course-price">R$ 197,00</div>
+                        <a href="#" class="btn btn-primary btn-block">
+                            <i class="fas fa-shopping-cart"></i> Comprar Curso
+                        </a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Álgebra Linear</h3>
+                        <p class="course-description">Aprenda álgebra de forma prática com exemplos reais e aplicações.</p>
+                        <div class="course-price">R$ 297,00</div>
+                        <a href="#" class="btn btn-primary btn-block">
+                            <i class="fas fa-shopping-cart"></i> Comprar Curso
+                        </a>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Cálculo Diferencial</h3>
+                        <p class="course-description">Domine os conceitos de cálculo com aulas detalhadas e exercícios práticos.</p>
+                        <div class="course-price">R$ 397,00</div>
+                        <a href="#" class="btn btn-primary btn-block">
+                            <i class="fas fa-shopping-cart"></i> Comprar Curso
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funcionalidades -->
+    <section id="funcionalidades" style="background: #f8fafc;">
+        <div class="container">
+            <h2 class="section-title">Funcionalidades da Plataforma</h2>
+            <p class="section-subtitle">Tudo o que você precisa para criar e gerenciar sua escola online</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Painel Administrativo</h3>
+                    <p>Gerenciamento completo de cursos, alunos e pagamentos com relatórios detalhados.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Sistema de Pagamentos</h3>
+                    <p>Integração com PagSeguro/PayPal para processamento seguro de transações.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Área do Aluno</h3>
+                    <p>Player de vídeo integrado, progresso de estudos e certificados automáticos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Captação de Leads</h3>
+                    <p>Sistema de aulas demo com formulário de captura e integração com Mailchimp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tecnologias -->
+    <section id="tecnologias">
+        <div class="container">
+            <h2 class="section-title">Stack Tecnológico</h2>
+            <p class="section-subtitle">Plataforma desenvolvida com as melhores tecnologias do mercado</p>
+            
+            <div class="tech-stack">
+                <div class="tech-item">React 18</div>
+                <div class="tech-item">Node.js</div>
+                <div class="tech-item">Express.js</div>
+                <div class="tech-item">MySQL</div>
+                <div class="tech-item">JWT Authentication</div>
+                <div class="tech-item">REST API</div>
+                <div class="tech-item">Chart.js</div>
+                <div class="tech-item">Font Awesome</div>
+            </div>
+
+            <div class="admin-preview">
+                <h3><i class="fas fa-code"></i> Código da Aplicação</h3>
+                <p>Plataforma completa com backend, frontend e banco de dados:</p>
+                
+                <div class="code-block">
+// Exemplo de código - API de Autenticação
+app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { nome, email, senha } = req.body;
+        const hashedPassword = await bcrypt.hash(senha, 10);
+        
+        const [result] = await pool.execute(
+            'INSERT INTO usuarios (nome, email, senha, tipo) VALUES (?, ?, ?, "aluno")',
+            [nome, email, hashedPassword]
+        );
+        
+        const token = jwt.sign(
+            { userId: result.insertId, email },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+        
+        res.status(201).json({ success: true, token, user: { id: result.insertId, nome, email } });
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Erro ao cadastrar' });
+    }
+});
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" style="background: linear-gradient(135deg, #10b981, #34d399); color: white;">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Experimente Grátis</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Cadastre-se para acessar aulas demo e testar a plataforma</p>
+            
+            <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: var(--radius); color: var(--text-color);">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">
+                    <i class="fas fa-user-plus"></i> Cadastro para Aulas Demo
+                </h3>
+                
+                <form id="demoForm" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nome Completo</label>
+                        <input type="text" placeholder="Seu nome" style="width: 100%; padding: 10px; border: 2px solid var(--border-color); border-radius: var(--radius);">
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Email</label>
+                        <input type="email" placeholder="seu@email.com" style="width: 100%; padding: 10px; border: 2px solid var(--border-color); border-radius: var(--radius);">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">
+                        <i class="fas fa-play-circle"></i> Acessar Aulas Demo
+                    </button>
+                    
+                    <p style="font-size: 12px; color: var(--text-light); text-align: center;">
+                        Ao cadastrar, você concorda com nossos Termos de Uso
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estrutura do Projeto -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Estrutura Completa do Projeto</h2>
+            <p class="section-subtitle">Toda a aplicação em uma única solução</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px;">
+                <div class="feature-card">
+                    <h3><i class="fas fa-database"></i> Banco de Dados</h3>
+                    <p>MySQL com 10 tabelas relacionadas:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Usuários & Alunos</li>
+                        <li>Cursos & Conteúdos</li>
+                        <li>Compras & Pagamentos</li>
+                        <li>Leads & Certificados</li>
+                        <li>Progresso & Acessos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-server"></i> Backend API</h3>
+                    <p>Node.js/Express com 50+ endpoints:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Autenticação JWT</li>
+                        <li>CRUD Completo</li>
+                        <li>Upload de Arquivos</li>
+                        <li>Relatórios em PDF</li>
+                        <li>Integração Pagamentos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-desktop"></i> Frontend React</h3>
+                    <p>Interface moderna e responsiva:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Dashboard Admin</li>
+                        <li>Área do Aluno</li>
+                        <li>Player de Vídeo</li>
+                        <li>Gráficos Interativos</li>
+                        <li>Design Responsivo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-calculator"></i> Matemática Fácil</h3>
+                    <p>Plataforma completa de cursos online especializada em matemática.</p>
+                    <p style="margin-top: 20px;">
+                        <i class="fas fa-envelope"></i> contato@matematicafacil.com<br>
+                        <i class="fas fa-phone"></i> (11) 99999-9999
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <p><a href="#home" style="color: rgba(255,255,255,0.7); text-decoration: none;">Início</a></p>
+                    <p><a href="#cursos" style="color: rgba(255,255,255,0.7); text-decoration: none;">Cursos</a></p>
+                    <p><a href="#funcionalidades" style="color: rgba(255,255,255,0.7); text-decoration: none;">Funcionalidades</a></p>
+                    <p><a href="#demo" style="color: rgba(255,255,255,0.7); text-decoration: none;">Aulas Demo</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Tecnologias</h3>
+                    <p>React • Node.js • Express • MySQL</p>
+                    <p>JWT • REST API • Chart.js • Font Awesome</p>
+                    <div style="margin-top: 20px; display: flex; gap: 15px;">
+                        <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-github"></i></a>
+                        <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: white; font-size: 20px;"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Matemática Fácil. Todos os direitos reservados.</p>
+                <p>Plataforma de cursos online completa - Desenvolvida para facilitar o aprendizado de matemática</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form submission
+        document.getElementById('demoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cadastro realizado com sucesso! Você receberá acesso às aulas demo em breve.');
+            this.reset();
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Course card interaction
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if(!e.target.closest('.btn')) {
+                    const title = this.querySelector('.course-title').textContent;
+                    alert(`Você selecionou o curso: ${title}\n\nPara comprar, clique no botão "Comprar Curso"`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

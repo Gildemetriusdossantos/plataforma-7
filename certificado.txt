@@ -1,0 +1,66 @@
+// backend/src/services/certificateService.js
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+const path = require('path');
+
+class CertificateService {
+    generateCertificate(student, course) {
+        return new Promise((resolve, reject) => {
+            const doc = new PDFDocument({
+                layout: 'landscape',
+                size: 'A4'
+            });
+            
+            const fileName = `certificado_${student.id}_${course.id}_${Date.now()}.pdf`;
+            const filePath = path.join(__dirname, '../certificates', fileName);
+            
+            // Cria diretório se não existir
+            if (!fs.existsSync(path.dirname(filePath))) {
+                fs.mkdirSync(path.dirname(filePath), { recursive: true });
+            }
+            
+            const stream = fs.createWriteStream(filePath);
+            doc.pipe(stream);
+            
+            // Design do certificado
+            doc.image('assets/certificate-bg.jpg', 0, 0, { width: 842, height: 595 });
+            
+            doc.font('fonts/Montserrat-Bold.ttf')
+                .fontSize(48)
+                .fillColor('#2c3e50')
+                .text('CERTIFICADO', 0, 150, { align: 'center' });
+            
+            doc.fontSize(24)
+                .fillColor('#333')
+                .text('Concedido a', 0, 220, { align: 'center' });
+            
+            doc.fontSize(36)
+                .fillColor('#1abc9c')
+                .text(student.nome.toUpperCase(), 0, 260, { align: 'center' });
+            
+            doc.fontSize(18)
+                .fillColor('#333')
+                .text(`por concluir com êxito o curso "${course.titulo}"`, 0, 320, { align: 'center' });
+            
+            doc.fontSize(14)
+                .fillColor('#666')
+                .text(`Data de conclusão: ${new Date().toLocaleDateString('pt-BR')}`, 0, 380, { align: 'center' });
+            
+            doc.fontSize(12)
+                .fillColor('#999')
+                .text(`Código do certificado: CERT-${student.id}-${course.id}-${Date.now()}`, 0, 450, { align: 'center' });
+            
+            doc.end();
+            
+            stream.on('finish', () => {
+                resolve({
+                    filePath,
+                    fileName,
+                    downloadUrl: `/certificates/${fileName}`
+                });
+            });
+            
+            stream.on('error', reject);
+        });
+    }
+}
